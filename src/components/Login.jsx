@@ -121,7 +121,7 @@ const Login = () => {
           </div>
           <div>
             <span>
-              {!isLoginForm ? "Not registered? " : "Already registered? "}
+              {isLoginForm ? "Not registered? " : "Already registered? "}
             </span>
             <span
               onClick={() => setIsloginForm(!isLoginForm)}
