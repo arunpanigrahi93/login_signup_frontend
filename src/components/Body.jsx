@@ -8,29 +8,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
 const Body = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const userData = useSelector((store) => store.user);
-
-  const fetchData = async () => {
+  const fetchUser = async () => {
     try {
+      if (userData) return;
       const res = await axios.get(BASE_URL + "/profile", {
         withCredentials: true,
       });
+      console.log(res.data);
       dispatch(addUser(res.data));
     } catch (err) {
       if (err.status === 401) {
-        return navigate("/login");
-      } else {
-        console.log(err);
+        navigate("/login");
       }
+      console.log(err);
     }
   };
 
   useEffect(() => {
-    if (!userData) {
-      fetchData();
-    }
+    fetchUser();
   }, []);
 
   return (
@@ -41,4 +39,5 @@ const Body = () => {
     </div>
   );
 };
+
 export default Body;
